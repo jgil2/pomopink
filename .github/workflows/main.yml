@@ -30,7 +30,7 @@ jobs:
 
       - name: Capacitor Sync
         run: |
-          pnpm add @capacitor/ios
+          pnpm add -w @capacitor/ios
           npx cap add ios
           npx cap sync ios
 
