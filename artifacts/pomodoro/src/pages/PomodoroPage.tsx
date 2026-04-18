@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useLocation } from "wouter";
+import { App } from '@capacitor/app';
 import { TimerCircle } from "@/components/TimerCircle";
 import { Character } from "@/components/Character";
 import { SettingsModal } from "@/components/SettingsModal";
@@ -232,6 +233,16 @@ export default function PomodoroPage() {
     };
     document.addEventListener("visibilitychange", onVisible);
     window.addEventListener("focus", onVisible);
+    
+    // This catches the exact millisecond the iPhone brings the app back to the screen
+    let appStateListener: any;
+    App.addListener('appStateChange', ({ isActive }) => {
+      if (isActive) {
+        tick(); // Force a sync so the user never sees a lagging visual
+      }
+    }).then(listener => {
+      appStateListener = listener;
+    });
 
     return () => {
       clearInterval(interval);
