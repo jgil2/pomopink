@@ -1,0 +1,33 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="180" height="180" rx="36" fill="url(#bg)"/>
+  <defs>
+    <radialGradient id="bg" cx="40%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#f9c6d0"/>
+      <stop offset="100%" stop-color="#d9b3e8"/>
+    </radialGradient>
+    <radialGradient id="tomato" cx="45%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ffb3b3"/>
+      <stop offset="60%" stop-color="#f47c7c"/>
+      <stop offset="100%" stop-color="#e05555"/>
+    </radialGradient>
+  </defs>
+  <!-- tomato body -->
+  <ellipse cx="90" cy="103" rx="52" ry="46" fill="url(#tomato)"/>
+  <!-- highlight -->
+  <ellipse cx="72" cy="82" rx="10" ry="7" fill="white" fill-opacity="0.45" transform="rotate(-20 72 82)"/>
+  <!-- stem -->
+  <rect x="87" y="52" width="7" height="18" rx="3" fill="#5c9e3a"/>
+  <!-- leaves -->
+  <ellipse cx="80" cy="60" rx="13" ry="6" fill="#6cb84a" transform="rotate(-35 80 60)"/>
+  <ellipse cx="101" cy="60" rx="13" ry="6" fill="#6cb84a" transform="rotate(35 101 60)"/>
+  <!-- eyes -->
+  <ellipse cx="76" cy="104" rx="6" ry="6.5" fill="#3a1a1a"/>
+  <ellipse cx="104" cy="104" rx="6" ry="6.5" fill="#3a1a1a"/>
+  <ellipse cx="74.5" cy="102" rx="2.2" ry="2.2" fill="white"/>
+  <ellipse cx="102.5" cy="102" rx="2.2" ry="2.2" fill="white"/>
+  <!-- blush -->
+  <ellipse cx="66" cy="115" rx="7" ry="4" fill="#f47c7c" fill-opacity="0.4"/>
+  <ellipse cx="114" cy="115" rx="7" ry="4" fill="#f47c7c" fill-opacity="0.4"/>
+  <!-- smile -->
+  <path d="M78 120 Q90 131 102 120" stroke="#3a1a1a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+</svg>

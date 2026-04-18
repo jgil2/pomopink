@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "iIhbJ-Cnb9pNCmzYF3NAQ"
+uri = "file://artifacts/pomodoro-mobile/assets/images/icon.png"
+type = "image"
+title = "pomopink-app-icon"

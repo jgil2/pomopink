@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Cute Pomodoro Timer"
+version = "1.0.0"
+id = "artifacts/pomodoro"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23205
+
+[services.development]
+run = "pnpm --filter @workspace/pomodoro run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pomodoro", "run", "build" ]
+publicDir = "artifacts/pomodoro/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23205"
+BASE_PATH = "/"
