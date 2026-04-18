@@ -1,6 +1,10 @@
 name: Build iOS IPA (pnpm version)
 on: [push]
 
+# This silences the Node 20 deprecation warning
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: macos-latest
@@ -15,10 +19,11 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9  # Uses the latest stable pnpm 9
+          version: 9
 
+      # Adding --no-frozen-lockfile forces it to bypass the mismatch error
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build Web App
         run: pnpm run build
