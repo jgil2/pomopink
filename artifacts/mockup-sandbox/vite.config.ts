@@ -5,7 +5,7 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { mockupPreviewPlugin } from "./mockupPreviewPlugin";
 
-// 1. Get the port, or default to "3000" if it doesn't exist
+// 1. Safe port handling
 const rawPort = process.env.PORT || "3000";
 const port = Number(rawPort);
 
@@ -13,12 +13,8 @@ if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
-// 2. Get the base path, or default to the root "/" if it doesn't exist
+// 2. Safe base path handling
 const basePath = process.env.BASE_PATH || "/";
-
-export default defineConfig({
-  base: basePath,
-  plugins: [
 
 export default defineConfig({
   base: basePath,
@@ -27,8 +23,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     runtimeErrorOverlay(),
-    ...(process.env.NODE_ENV !== "production" &&
-    process.env.REPL_ID !== undefined
+    ...(process.env.NODE_ENV !== "production" && process.env.REPL_ID !== undefined
       ? [
           await import("@replit/vite-plugin-cartographer").then((m) =>
             m.cartographer({
