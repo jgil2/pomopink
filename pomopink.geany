@@ -20,6 +20,7 @@ indent_mode=2
 [project]
 name=pomopink
 base_path=C:\\Users\\Jada\\Downloads\\Pastel-Timer
+description=
 
 [long line marker]
 long_line_behaviour=1
@@ -42,4 +43,4 @@ FILE_NAME_11=0;TypeScript;0;EUTF-8;1;1;0;C%3A%5CUsers%5CJada%5CDownloads%5CPaste
 FILE_NAME_12=0;TypeScript;0;EUTF-8;1;1;0;C%3A%5CUsers%5CJada%5CDownloads%5CPastel-Timer%5Cartifacts%5Cpomodoro%5Csrc%5Ccomponents%5Cui%5Csidebar.tsx;0;4
 FILE_NAME_13=0;TypeScript;0;EUTF-8;1;1;0;C%3A%5CUsers%5CJada%5CDownloads%5CPastel-Timer%5Cartifacts%5Cpomodoro%5Csrc%5CApp.tsx;0;4
 FILE_NAME_14=0;TypeScript;0;EUTF-8;1;1;0;C%3A%5CUsers%5CJada%5CDownloads%5CPastel-Timer%5Cartifacts%5Cpomodoro%5Csrc%5Cmain.tsx;0;4
-FILE_NAME_15=8506;TypeScript;0;EUTF-8;1;1;0;C%3A%5CUsers%5CJada%5CDownloads%5CPastel-Timer%5Cartifacts%5Cpomodoro%5Csrc%5Cpages%5CPomodoroPage.tsx;0;4
+FILE_NAME_15=9425;TypeScript;0;EUTF-8;1;1;0;C%3A%5CUsers%5CJada%5CDownloads%5CPastel-Timer%5Cartifacts%5Cpomodoro%5Csrc%5Cpages%5CPomodoroPage.tsx;0;4

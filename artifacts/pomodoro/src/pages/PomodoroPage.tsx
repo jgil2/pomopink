@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useLocation } from "wouter";
 import { App } from '@capacitor/app';
+import { LocalNotifications } from '@capacitor/local-notifications';
 import { TimerCircle } from "@/components/TimerCircle";
 import { Character } from "@/components/Character";
 import { SettingsModal } from "@/components/SettingsModal";
@@ -87,20 +88,36 @@ function getTotalSeconds(phase: Phase, settings: Settings) {
   return settings.longBreakMinutes * 60;
 }
 
-function requestNotificationPermission() {
-  if ("Notification" in window && Notification.permission === "default") {
-    Notification.requestPermission();
+async function requestNotificationPermission() {
+  try {
+    const { display } = await LocalNotifications.requestPermissions();
+    return display === 'granted';
+  } catch (e) {
+    console.error("Notification permission error", e);
+    return false;
   }
 }
 
-function sendNotification(title: string, body: string) {
-  if ("Notification" in window && Notification.permission === "granted") {
-    new Notification(title, {
-      body,
-      icon: "/favicon.ico",
-      badge: "/favicon.ico",
-    });
-  }
+async function scheduleTimerNotification(endTimeMs: number, phase: Phase) {
+  // Always clear existing notifications first to prevent duplicates
+  await cancelTimerNotification();
+
+  await LocalNotifications.schedule({
+    notifications: [
+      {
+        id: 1, // We use ID 1 so we can easily find and cancel it later
+        title: "Pomopink ✨",
+        body: phaseFinishedMessage(phase),
+        schedule: { at: new Date(endTimeMs) },
+        sound: null, // Uses default iOS notification sound
+      }
+    ]
+  });
+}
+
+// 3. Cancel the Notification
+async function cancelTimerNotification() {
+  await LocalNotifications.cancel({ notifications: [{ id: 1 }] });
 }
 
 export default function PomodoroPage() {
@@ -172,8 +189,6 @@ export default function PomodoroPage() {
     (finishedPhase: Phase, currentCycle: number, currentSettings: Settings) => {
       setJustFinished(true);
       setTimeout(() => setJustFinished(false), 2500);
-
-      sendNotification("Pomopink ✨", phaseFinishedMessage(finishedPhase));
 
       if (finishedPhase === "work") {
         const newCycle = currentCycle + 1;
@@ -251,18 +266,17 @@ export default function PomodoroPage() {
     };
   }, [isRunning, endTime, advancePhase]);
 
-  const handlePlayPause = () => {
-    requestNotificationPermission();
-    if ("Notification" in window && Notification.permission === "denied") {
-      setNotifDenied(true);
-      setTimeout(() => setNotifDenied(false), 3000);
-    }
+  const handlePlayPause = async () => {
+    await requestNotificationPermission();
     if (isRunning) {
-      // Pause: freeze secondsLeft, clear end time
+      // Pause: freeze secondsLeft, clear end time, CANCEL notification
       setEndTime(null);
+      cancelTimerNotification();
     } else {
-      // Resume/start: set end time based on current secondsLeft
-      setEndTime(Date.now() + secondsLeft * 1000);
+      // Resume/start: set end time, SCHEDULE notification
+      const newEndTime = Date.now() + secondsLeft * 1000;
+      setEndTime(newEndTime);
+      scheduleTimerNotification(newEndTime, phase);
     }
   };
 
@@ -270,10 +284,12 @@ export default function PomodoroPage() {
     setEndTime(null);
     setSecondsLeft(totalSeconds);
     setJustFinished(false);
+    cancelTimerNotification();
   };
 
   const handleSkip = () => {
     setEndTime(null);
+    cancelTimerNotification();
     advancePhase(phase, cycleCount, settings);
   };
 
