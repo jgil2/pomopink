@@ -109,7 +109,6 @@ async function scheduleTimerNotification(endTimeMs: number, phase: Phase) {
         title: "Pomopink ✨",
         body: phaseFinishedMessage(phase),
         schedule: { at: new Date(endTimeMs) },
-        sound: null, // Uses default iOS notification sound
       }
     ]
   });
