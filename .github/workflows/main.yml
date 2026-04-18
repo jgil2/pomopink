@@ -1,4 +1,4 @@
-name: Build iOS IPA
+name: Build iOS IPA (pnpm version)
 on: [push]
 
 jobs:
@@ -6,15 +6,22 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+
+      - name: Install Node.js 22
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9  # Uses the latest stable pnpm 9
 
       - name: Install Dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build Web App
-        run: npm run build
+        run: pnpm run build
 
       - name: Capacitor Sync
         run: npx cap sync ios
